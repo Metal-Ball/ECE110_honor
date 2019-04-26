@@ -8,7 +8,7 @@
 #define BE_RIGHT_MAX 5
 #define BE_LEFT_MAX 100
 
-//INVINCIBLE_FRAME time after shot
+//INVINCIBLE_FRAME period after shot
 #define INVINCIBLE_FRAME 40
 
 //thunder counter

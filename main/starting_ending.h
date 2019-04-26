@@ -3,6 +3,8 @@
 #define BE_UP_MAX 20
 #define BE_RIGHT_MAX 5
 #define BE_LEFT_MAX 100
+
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //pixel 0
 //circle 1
@@ -14,23 +16,36 @@ void reset(){
     draw(4, 0,0,0,0,ColD);
     
 }
+
+
+
 void print_welcome_message(){
     reset();
-    
-    draw(2,0,0,31,15,ColY);
-    draw(0,1,25,0,0,ColY);
-    draw(0,5,25,0,0,ColY);
-    draw(0,1,29,0,0,ColY);
-    draw(0,5,29,0,0,ColY);
-    
-    draw(0,26,25,0,0,ColY);
-    draw(0,30,25,0,0,ColY);
-    draw(0,26,29,0,0,ColY);
-    draw(0,30,29,0,0,ColY);
+   
+    drawRec0(1,25,5,29,ColY);
+
+    drawRec0(26,25,30,29,ColY);
     
     return;
 }
 
+void drawPrison(){
+  
+   draw(3,11,5,11,0,ColY);
+   draw(3,19,5,19,0,ColY);
+   draw(3,11,26,11,31,ColY);
+   draw(3,19,26,19,31,ColY);
+   int l;
+  for(l=0;l++;l<=5){
+    
+      draw(3,11,5-l,11,5-l,ColD);
+      draw(3,19,5-l,19,5-l,ColD);
+      draw(3,11,26+l,11,26+l,ColD);
+      draw(3,19,26+l,19,26+l,ColD);
+      
+  }
+  
+}
 
 void game_ready(player* player1, player* player2){
     print_welcome_message();
@@ -42,17 +57,23 @@ void game_ready(player* player1, player* player2){
       if(!player1_is_ready){
          if(player1->UP==1){
             player1_is_ready=1;
-            draw(0,31,31,0,0,ColR);
+            drawRec1(2,26,4,28,ColR);
          }
       }
       if(!player2_is_ready){
          if(player2->UP==1){
             player2_is_ready=1;
-            draw(0,0,0,0,0,ColB);
+            drawRec1(27,26,29,28,ColB);
          }
       }
       
-      if(player1_is_ready && player2_is_ready){break;}
+      if(player1_is_ready && player2_is_ready){
+        player1->UP=0;
+        player2->UP=0;
+        player1->BE_UP=BE_UP_MAX;
+        player2->BE_UP=BE_UP_MAX;
+        delay(2000);
+        break;}
     }
 }
 
@@ -66,14 +87,61 @@ void game_start(player player1, player player2){
     delay(100);
     draw(1,player1.x,player1.y,1,0,player1.mycolor);
     draw(1,player2.x,player2.y,1,0,player2.mycolor);
+    
+    drawPrison();
     delay(1000);
     
     
 }
 
 
+void retry(player* player1, player* player2,int* start,heavyBomb1* heavyBombList1, heavyBomb2* heavyBombList2, lightBomb1* lightBombList1, lightBomb2* lightBombList2){
+    reset();
+    int arrow_x1=1;
+    int arrow_x2=17;
+    int arrow_y=27;
+    
+    int choice=1;
+    
+    drawArrow(arrow_x1,arrow_y,ColY);
+    while(1){
+      joysticksIO(player1,player2);
+      if(player1->moveX==1){
+        drawArrow(arrow_x1,arrow_y,ColD);
+        drawArrow(arrow_x2,arrow_y,ColY);
+        player1->moveX=0;
+        choice=1;
+      }
+      if(player1->moveX==-1){
+        drawArrow(arrow_x2,arrow_y,ColD);
+        drawArrow(arrow_x1,arrow_y,ColY);
+        player1->moveX=0;
+        choice=2;
+      }
+      if(player1->UP==1){
+        player1->BE_UP=BE_UP_MAX;
+        if(choice==1){
+           *start=0;
+           *player1={15, 1, 0, 0, 0, 0, 0, 0, 3, 0,  ColR, 0, 0, 0, 0, -99,0};
+           *player2={15, 30, 0, 0, 0, 0, 0, 0, 3, 0, ColB, 0, 0, 0, 0, -99,0};
+           //bombList_init(heavyBombList1, heavyBombList2, lightBombList1, lightBombList2);
+           return;
+        }
+        if(choice==2){
+           player1->HP=-1;
+           player2->HP=-1;
+           return;
+        }
+        
+      }
+      
+      
+    }
+  
+}
 
-void game_player1_wins(player player1, player player2){
+
+void game_player1_wins(player* player1, player* player2){
     //TODO: INSERT YOUR CODE HERE
     
     int a,b,c,d,e,f,g,h,i,j,k,l,m,n;
@@ -150,10 +218,13 @@ void game_player1_wins(player player1, player player2){
     draw(0,4,28,0,0,ColR);
     draw(0,4,27,0,0,ColR);
     draw(0,3,26,0,0,ColR);
+
+    delay(5000);
+
     
 }
 
-void game_player2_wins(player player1, player player2){
+void game_player2_wins(player* player1, player* player2){
     //TODO: INSERT YOUR CODE HERE
     int a,b,c,d,e,f,g,h,i,j,k,l,m,n;
     for(a=0;a<=6;a++)
@@ -228,7 +299,9 @@ void game_player2_wins(player player1, player player2){
     draw(0,27,3,0,0,ColB);
     draw(0,27,4,0,0,ColB);
     draw(0,28,5,0,0,ColB);
-    
+
+    delay(5000);
+
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

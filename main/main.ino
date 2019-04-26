@@ -42,7 +42,7 @@ lightBomb2 lightBombList2[LIGHT_BOMB_NUM*2];
 void setup() {
 
   Serial.begin(74880);
-
+  
   pinMode (2, INPUT); // BottomUp 1
   pinMode (3, INPUT); // BottomRight 1
   pinMode (4, INPUT); // BottomDown 1
@@ -88,9 +88,12 @@ void loop() {
   
   //////////////////////////starting////////////////////////////////////////////////////////////////////////////
   if(!start){
+     reset();
      game_ready(&player1, &player2);
      game_start(player1, player2);
      start=1;
+     drawPrison();
+     
   }
   if(start){
   //////////////////////////gaming//////////////////////////////////////////////////////////////////////////////
@@ -123,15 +126,17 @@ void loop() {
   if (player1.HP == 0) {
     reset();
     draw(1,player2.x,player2.y,1,0,player2.mycolor);
-    game_player2_wins(player1,player2);
-    player1.HP--;
+    game_player2_wins(&player1,&player2);
+    reset();
+    retry(&player1,&player2,&start,heavyBombList1, heavyBombList2, lightBombList1, lightBombList2);
     digitalWrite(8,HIGH);
   }
   if (player2.HP == 0 ) {
     reset();
     draw(1,player1.x,player1.y,1,0,player1.mycolor);
-    game_player1_wins(player1,player2);
-    player2.HP--;
+    game_player1_wins(&player1,&player2);
+    reset();
+    retry(&player1,&player2,&start,heavyBombList1, heavyBombList2, lightBombList1, lightBombList2);
     digitalWrite(8,HIGH);
   }
   }

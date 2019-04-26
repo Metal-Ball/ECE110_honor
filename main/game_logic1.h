@@ -16,6 +16,9 @@
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+
+
+
 //bomblist initialization
 void bombList_init(heavyBomb1* heavyBombList1, heavyBomb2* heavyBombList2, lightBomb1* lightBombList1, lightBomb2* lightBombList2){
   for (int i = 0; i < HEAVY_BOMB_NUM; i++) {

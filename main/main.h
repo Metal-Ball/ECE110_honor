@@ -114,8 +114,36 @@ void draw (uint8_t T, uint8_t X, uint8_t Y, uint8_t SizeX, uint8_t SizeY, uint16
   */ 
 }
 
+void drawRec0(uint8_t X1, uint8_t Y1, uint8_t X2, uint8_t Y2, uint16_t Col){
+  for(int xx=X1;xx<=X2;xx++){
+      draw(0,xx,Y1,0,0,Col);  
+  }
+  for(int yy=Y1+1;yy<=Y2;yy++){
+      draw(0,X2,yy,0,0,Col);
+  }
+  for(int xx=X2-1;xx>=X1;xx--){
+      draw(0,xx,Y2,0,0,Col);  
+  }
+  for(int yy=Y2-1;yy>Y1;yy--){
+      draw(0,X1,yy,0,0,Col);
+  }
+}
 
+void drawRec1(uint8_t X1, uint8_t Y1, uint8_t X2, uint8_t Y2, uint16_t Col){
+  if(X1>X2 || Y1>Y2){return;}
+  else{
+     drawRec0(X1,Y1,X2,Y2,Col);
+     drawRec1(X1+1,Y1+1,X2-1,Y2-1,Col);
+  }
+  
+}
 
+void drawArrow(int x, int y,color Col){
+   draw(3,x,y+1,x,y-1,Col);
+   draw(0,x+1,y,0,0,Col);  
+  
+}
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 int if_player1_shot_heavy (player player1, heavyBomb2 heavyBomb){
