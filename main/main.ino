@@ -11,8 +11,8 @@
 int start=0;
 
 //define heavy and light bomb capacity
-#define HEAVY_BOMB_NUM 1
-#define LIGHT_BOMB_NUM 3
+#define HEAVY_BOMB_NUM 2
+#define LIGHT_BOMB_NUM 5
 
 //define bottom enable counter upper bound: leaving time for actions
 //bottom enable: 0 means active
@@ -26,17 +26,23 @@ int start=0;
 //thunder counter
 #define thunder_counter_max 50;
 
+//player1 movement counter
+#define PLAYER1_COUNTER_MAX 5;
+static int player1_counter=PLAYER1_COUNTER_MAX;
+
 //construct 2 players in the order of
 //x, y, moveX, moveY, UP, LEFT, RIGHT, DOWN, HP, HP_LOSE, name, color,
 //BE_UP, BE_RIGHT, heavy_usage, light_usage, thunder_counter
-static player player1 = {15, 1, 0, 0, 0, 0, 0, 0, 3, 0,  ColR, 0, 0, 0, 0, -99,0};
-static player player2 = {15, 30, 0, 0, 0, 0, 0, 0, 3, 0, ColB, 0, 0, 0, 0, -99,0};
+static player player1 = {15, 1, 0, 0, 0, 0, 0, 0, 3, 0,  ColR, 0, 0, 0, 0, -99};
+static player player2 = {15, 30, 0, 0, 0, 0, 0, 0, 3, 0, ColB, 0, 0, 0, 0, -99};
 
 //initialize bomb lists
 heavyBomb1 heavyBombList1[HEAVY_BOMB_NUM];
 heavyBomb2 heavyBombList2[HEAVY_BOMB_NUM];
-lightBomb1 lightBombList1[LIGHT_BOMB_NUM*2];
-lightBomb2 lightBombList2[LIGHT_BOMB_NUM*2];
+lightBomb1 lightBombList1[LIGHT_BOMB_NUM];
+lightBomb2 lightBombList2[LIGHT_BOMB_NUM];
+
+
 
 /////////////////////////game set up///////////////////////////////////////////////////////////////////////////////////////////
 void setup() {
@@ -92,7 +98,6 @@ void loop() {
      game_ready(&player1, &player2);
      game_start(player1, player2);
      start=1;
-     drawPrison();
      
   }
   if(start){
@@ -102,6 +107,10 @@ void loop() {
   //global delay 
   delay(5);
 
+  
+  if(player1_counter!=0)
+  {player1_counter--;}
+  
   //initialize output pins
   digitalWrite(12,LOW);
   digitalWrite(11,LOW);
@@ -116,7 +125,7 @@ void loop() {
   perform_bottom_actions(&player1, &player2, heavyBombList1, heavyBombList2, lightBombList1, lightBombList2);
  
   //perform player movement
-  perform_player_movement(&player1, &player2);
+  perform_player_movement(&player1, &player2,&player1_counter);
   
   //perform bomb movement
   perform_bomb_movement(&player1, &player2, heavyBombList1, heavyBombList2, lightBombList1, lightBombList2);
@@ -128,7 +137,7 @@ void loop() {
     draw(1,player2.x,player2.y,1,0,player2.mycolor);
     game_player2_wins(&player1,&player2);
     reset();
-    retry(&player1,&player2,&start,heavyBombList1, heavyBombList2, lightBombList1, lightBombList2);
+    //retry(&player1,&player2,&start,heavyBombList1, heavyBombList2, lightBombList1, lightBombList2);
     digitalWrite(8,HIGH);
   }
   if (player2.HP == 0 ) {
@@ -136,7 +145,7 @@ void loop() {
     draw(1,player1.x,player1.y,1,0,player1.mycolor);
     game_player1_wins(&player1,&player2);
     reset();
-    retry(&player1,&player2,&start,heavyBombList1, heavyBombList2, lightBombList1, lightBombList2);
+    //retry(&player1,&player2,&start,heavyBombList1, heavyBombList2, lightBombList1, lightBombList2);
     digitalWrite(8,HIGH);
   }
   }

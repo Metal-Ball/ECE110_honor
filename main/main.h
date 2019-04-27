@@ -40,7 +40,6 @@ typedef struct{
     int light_usage;
     int thunder_counter;
     int r;                  //thunder position
-    int next_free_light;
 }player;
 
 //define bomb
@@ -48,24 +47,28 @@ typedef struct{
   int x;
   int y;
   int active;
+  int counter;
 }heavyBomb1;
 
 typedef struct{
   int x;
   int y;
-  int active;  
+  int active; 
+  int counter; 
 }heavyBomb2;
 
 typedef struct{
   int x;
   int y;
   int active;
+  int counter;
 }lightBomb1;
 
 typedef struct{
   int x;
   int y;
   int active;  
+  int counter;
 }lightBomb2;
 
 
@@ -78,7 +81,7 @@ typedef struct{
 //screen 4
 
 void draw (uint8_t T, uint8_t X, uint8_t Y, uint8_t SizeX, uint8_t SizeY, uint16_t Col){
-    int delaytime = 1;   //Total Time = delay*8
+    int delaytime = 0;   //Total Time = delay*8
   
     Serial.write(254);
     delay(delaytime);

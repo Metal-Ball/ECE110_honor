@@ -1,6 +1,13 @@
 //define heavy and light bomb capacity
-#define HEAVY_BOMB_NUM 1
-#define LIGHT_BOMB_NUM 3
+#define HEAVY_BOMB_NUM 2
+#define LIGHT_BOMB_NUM 5
+
+//define heavy and light bomb speed
+#define HEAVY_BOMB_COUNTER 7
+#define LIGHT_BOMB_COUNTER 4
+
+//player1 movement counter
+#define PLAYER1_COUNTER_MAX 5;
 
 //define bottom enable counter upper bound: leaving time for actions
 //bottom enable: 0 means active
@@ -13,6 +20,8 @@
 
 //thunder counter
 #define thunder_counter_max 50;
+
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

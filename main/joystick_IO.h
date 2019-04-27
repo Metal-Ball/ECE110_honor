@@ -18,9 +18,11 @@ uint8_t ReceT = 0;
 player1->UP=0;
 player1->LEFT=0;
 player1->RIGHT=0;
+player1->DOWN=0;
 player2->UP = 0;
 player2->LEFT = 0;
 player2->RIGHT = 0;
+player2->DOWN=0;
 
   
 if (Serial.available() > 0) {
@@ -36,6 +38,9 @@ else if (ReceFromPlayer2 == 16) {
 }
 else if (ReceFromPlayer2 == 32) {
     player2->RIGHT = 1;
+}
+else if (ReceFromPlayer2 == 128) {
+    player2->DOWN = 1;
 }
 else {
     //Decoding Part
@@ -135,6 +140,8 @@ else
 
 if(digitalRead(2)==LOW){player1->UP=1;}
 if(digitalRead(3)==LOW){player1->RIGHT=1;}
+if(digitalRead(4)==LOW){player1->DOWN=1;}
 if(digitalRead(5)==LOW){player1->LEFT=1;}
+
     
 }

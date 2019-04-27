@@ -29,6 +29,7 @@ void print_welcome_message(){
     return;
 }
 
+/*
 void drawPrison(){
   
    draw(3,11,5,11,0,ColY);
@@ -46,6 +47,7 @@ void drawPrison(){
   }
   
 }
+*/
 
 void game_ready(player* player1, player* player2){
     print_welcome_message();
@@ -88,7 +90,7 @@ void game_start(player player1, player player2){
     draw(1,player1.x,player1.y,1,0,player1.mycolor);
     draw(1,player2.x,player2.y,1,0,player2.mycolor);
     
-    drawPrison();
+    //drawPrison();
     delay(1000);
     
     
