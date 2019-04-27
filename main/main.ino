@@ -1,5 +1,6 @@
-
+#include "all_constants.h"
 #include "main.h"
+#include "HP_lose.h"
 #include "joystick_IO.h"
 #include "starting_ending.h"
 #include "game_logic1.h"
@@ -10,31 +11,13 @@
 //game starting signal
 int start=0;
 
-//define heavy and light bomb capacity
-#define HEAVY_BOMB_NUM 2
-#define LIGHT_BOMB_NUM 5
-
-//define bottom enable counter upper bound: leaving time for actions
-//bottom enable: 0 means active
-#define BE_UP_MAX 20
-#define BE_RIGHT_MAX 5
-#define BE_LEFT_MAX 100
-
-//INVINCIBLE_FRAME period after shot
-#define INVINCIBLE_FRAME 40
-
-//thunder counter
-#define thunder_counter_max 50;
-
-//player1 movement counter
-#define PLAYER1_COUNTER_MAX 5;
 static int player1_counter=PLAYER1_COUNTER_MAX;
 
 //construct 2 players in the order of
 //x, y, moveX, moveY, UP, LEFT, RIGHT, DOWN, HP, HP_LOSE, name, color,
 //BE_UP, BE_RIGHT, heavy_usage, light_usage, thunder_counter
-static player player1 = {15, 1, 0, 0, 0, 0, 0, 0, 3, 0,  ColR, 0, 0, 0, 0, -99};
-static player player2 = {15, 30, 0, 0, 0, 0, 0, 0, 3, 0, ColB, 0, 0, 0, 0, -99};
+static player player1;
+static player player2;
 
 //initialize bomb lists
 heavyBomb1 heavyBombList1[HEAVY_BOMB_NUM];
@@ -81,11 +64,6 @@ void setup() {
   //pin 8 is used as reset signal
   digitalWrite(8,LOW);
   
-  //feed random num generator
-  srand(time(NULL));
-  
-  //bombList initializations
-  bombList_init(heavyBombList1, heavyBombList2, lightBombList1, lightBombList2);
 
 }
 
@@ -95,7 +73,11 @@ void loop() {
   //////////////////////////starting////////////////////////////////////////////////////////////////////////////
   if(!start){
      reset();
+     //prepare for game and initialize players
      game_ready(&player1, &player2);
+     //bombList initializations
+     bombList_init(heavyBombList1, heavyBombList2, lightBombList1, lightBombList2);
+     //start game
      game_start(player1, player2);
      start=1;
      
@@ -106,8 +88,8 @@ void loop() {
       
   //global delay 
   delay(5);
-
-  
+ 
+  //player1 speed 
   if(player1_counter!=0)
   {player1_counter--;}
   
@@ -135,17 +117,15 @@ void loop() {
   if (player1.HP == 0) {
     reset();
     draw(1,player2.x,player2.y,1,0,player2.mycolor);
-    game_player2_wins(&player1,&player2);
+    game_player2_wins(player1,player2);
     reset();
-    //retry(&player1,&player2,&start,heavyBombList1, heavyBombList2, lightBombList1, lightBombList2);
     digitalWrite(8,HIGH);
   }
   if (player2.HP == 0 ) {
     reset();
     draw(1,player1.x,player1.y,1,0,player1.mycolor);
-    game_player1_wins(&player1,&player2);
+    game_player1_wins(player1,player2);
     reset();
-    //retry(&player1,&player2,&start,heavyBombList1, heavyBombList2, lightBombList1, lightBombList2);
     digitalWrite(8,HIGH);
   }
   }

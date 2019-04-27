@@ -29,24 +29,10 @@ if (Serial.available() > 0) {
     ReceFromPlayer2 = Serial.read();
 }
 
-//Bottom detection
-if (ReceFromPlayer2 == 64) {
-    player2->LEFT = 1;
-}
-else if (ReceFromPlayer2 == 16) {
-    player2->UP = 1;
-}
-else if (ReceFromPlayer2 == 32) {
-    player2->RIGHT = 1;
-}
-else if (ReceFromPlayer2 == 128) {
-    player2->DOWN = 1;
-}
-else {
     //Decoding Part
     ReceT = ReceFromPlayer2;
     
-    //First
+                                                                       //First
     if ((ReceT % 2) == 0) {
         player2->moveY = 0;
         ReceT = ReceT / 2;
@@ -55,7 +41,7 @@ else {
         player2->moveY = 1;
         ReceT = (ReceT - 1) / 2;
     }
-    //Second
+                                                                    //Second
     if ((ReceT % 2) == 0) {
         ReceT = ReceT / 2;
     }
@@ -63,7 +49,7 @@ else {
         player2->moveY = player2->moveY * (-1);
         ReceT = (ReceT - 1) / 2;
     }
-    //Third
+                                                                    //Third
     if ((ReceT % 2) == 0) {
         player2->moveX = 0;
         ReceT = ReceT / 2;
@@ -72,7 +58,7 @@ else {
         player2->moveX = 1;
         ReceT = (ReceT - 1) / 2;
     }
-    //Fourth
+                                                                    //Fourth
     if ((ReceT % 2) == 0) {
         ReceT = ReceT / 2;
     }
@@ -80,7 +66,11 @@ else {
         player2->moveX = player2->moveX * (-1);
         ReceT = (ReceT - 1) / 2;
     }
-}
+
+      if(ReceT == 1){player2->UP = 1;}
+      else if(ReceT == 2){player2->RIGHT = 1;}
+      else if(ReceT == 4){player2->LEFT = 1;}
+      else if(ReceT == 8){player2->DOWN = 1;}
 
 //player1 Read Controller part
 Sx = analogRead(A0);
