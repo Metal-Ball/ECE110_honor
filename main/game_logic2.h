@@ -42,8 +42,14 @@ void perform_bottom_actions(player* player1, player* player2, heavyBomb1* heavyB
      player1->BE_LEFT=BE_LEFT_MAX;
      player1->thunder_counter=thunder_counter_max;   
   }
-
-
+  
+  //DOWN
+  if (player1->DOWN==1 && (!player1->BE_DOWN))
+  {  
+     player1->BE_DOWN=BE_DOWN_MAX;
+     player1->mycolor=64000; 
+     player1->HP_LOSE=5000;
+  }
 
   //player 2 bottom
   //UP
@@ -75,13 +81,20 @@ void perform_bottom_actions(player* player1, player* player2, heavyBomb1* heavyB
   }
 
   //LEFT
-  if (player2->LEFT == 1) {
+  if (player2->LEFT == 1 &&(!player2->BE_LEFT)) {
      srand(player1->x*player2->y*(player1->heavy_usage+1));
      player2->r=randomGenerator();
      player2->BE_LEFT=BE_LEFT_MAX;
      player2->thunder_counter=thunder_counter_max; 
   }
   
+  //DOWN
+  if (player2->DOWN==1 && (!player2->BE_DOWN))
+  {  
+     player2->BE_DOWN=BE_DOWN_MAX;
+     player2->mycolor=650;
+     player2->HP_LOSE=5000;
+  }
 }
 
 

@@ -13,9 +13,7 @@ int start=0;
 
 static int player1_counter=PLAYER1_COUNTER_MAX;
 
-//construct 2 players in the order of
-//x, y, moveX, moveY, UP, LEFT, RIGHT, DOWN, HP, HP_LOSE, name, color,
-//BE_UP, BE_RIGHT, heavy_usage, light_usage, thunder_counter
+
 static player player1;
 static player player2;
 

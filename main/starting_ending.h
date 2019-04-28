@@ -45,8 +45,8 @@ void game_ready(player* player1, player* player2){
       }
     }
     
-    *player1={15, 1, 0, 0, 0, 0, 0, 0, 3, 0,  ColR, 0, 0, 0, 0, -99};
-    *player2 = {15, 30, 0, 0, 0, 0, 0, 0, 3, 0, ColB, 0, 0, 0, 0, -99};
+    *player1 = {15, 1,  0, 0, 0, 0, 0, 0, 3, 0, ColR, 0, 0, 0, 0, 0,0,0,-99};
+    *player2 = {15, 30, 0, 0, 0, 0, 0, 0, 3, 0, ColB, 0, 0, 0, 0, 0,0,0,-99};
     player1->BE_UP=BE_UP_MAX;
     player2->BE_UP=BE_UP_MAX;
     delay(2000);

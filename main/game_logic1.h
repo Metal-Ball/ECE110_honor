@@ -35,7 +35,24 @@ void counter_update(player* player1, player* player2){
   if (player1->BE_LEFT != 0) {
     player1->BE_LEFT--;
   }
-  
+  if (player2->BE_LEFT != 0){
+    player2->BE_LEFT--;
+  }
+  if (player1->BE_DOWN != 0) {
+    player1->BE_DOWN--;
+    if(player1->BE_DOWN == BE_DOWN_MAX/4){
+      player1->mycolor=ColR;
+      player1->HP_LOSE=0;
+    }
+  }
+  if (player2->BE_DOWN != 0){
+    player2->BE_DOWN--;
+    if(player2->BE_DOWN == BE_DOWN_MAX/4){
+      player2->mycolor=ColB;
+      player1->HP_LOSE=0;
+    }
+  }
+
   if (player1->HP_LOSE != 0) {
     player1->HP_LOSE--;
     draw(1,player1->x,player1->y,1,0,ColD);

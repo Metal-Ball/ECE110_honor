@@ -21,6 +21,7 @@ typedef struct{
     int BE_UP;      //bottom UP enable  
     int BE_RIGHT;    //bottom RIGHT enable
     int BE_LEFT;     //bottom LEFT enable
+    int BE_DOWN;     //bottom DOWN enable
     int heavy_usage;
     int light_usage;
     double thunder_counter;
