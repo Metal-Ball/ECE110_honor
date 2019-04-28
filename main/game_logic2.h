@@ -171,11 +171,9 @@ void perform_bomb_movement(player* player1, player* player2, heavyBomb1* heavyBo
             //clear bomb trace
             draw(0, heavyBombList1[i].x, heavyBombList1[i].y - 1, 0, 0, ColD);
             draw(3, heavyBombList1[i].x - 1, heavyBombList1[i].y - 2, heavyBombList1[i].x + 1, heavyBombList1[i].y - 2, ColD);
-            if ((player2->HP_LOSE==0) && (if_player2_shot_heavy(player2, player1,heavyBombList1+i))) {
-              //draw(0, 0, 0, 0, 0, 65535);
-              digitalWrite(12,HIGH);
+            
+            if_player2_shot_heavy(player2, player1,heavyBombList1+i);
               
-            }
             heavyBombList1[i].counter=HEAVY_BOMB_COUNTER;
          }
          else{heavyBombList1[i].counter--;}
@@ -199,12 +197,8 @@ void perform_bomb_movement(player* player1, player* player2, heavyBomb1* heavyBo
             draw(0, heavyBombList2[i].x, heavyBombList2[i].y + 1, 0, 0, ColD);
             draw(3, heavyBombList2[i].x - 1, heavyBombList2[i].y + 2, heavyBombList2[i].x + 1, heavyBombList2[i].y + 2, ColD);
       
-      
-            if ( (player1->HP_LOSE==0) && (if_player1_shot_heavy(player1, player2,heavyBombList2+i))) {
-              //draw(0, 31, 0, 0, 0, 65535);
-              digitalWrite(11,HIGH); 
-              
-            }
+           if_player1_shot_heavy(player1, player2,heavyBombList2+i);
+    
             heavyBombList2[i].counter=HEAVY_BOMB_COUNTER;
           }
           else{heavyBombList2[i].counter--;}
@@ -232,13 +226,7 @@ void perform_bomb_movement(player* player1, player* player2, heavyBomb1* heavyBo
           //clear bomb trace
           draw(0, lightBombList1[i].x, lightBombList1[i].y - 1, 0, 0, ColD);
     
-    
-          if ( (player2->HP_LOSE==0) && (if_player2_shot_light(player2, player1,lightBombList1+i))) {
-            //draw(0, 31, 0, 0, 0, 65535);
-            digitalWrite(12,HIGH);
-           
-          }
-
+            if_player2_shot_light(player2, player1,lightBombList1+i);
            
           lightBombList1[i].counter=LIGHT_BOMB_COUNTER;
       }
@@ -261,11 +249,8 @@ void perform_bomb_movement(player* player1, player* player2, heavyBomb1* heavyBo
           //clear bomb trace
           draw(0, lightBombList2[i].x, lightBombList2[i].y + 1, 0, 0, ColD);
     
-          if ( (player1->HP_LOSE==0) && (if_player1_shot_light(player1, player2,lightBombList2+i))) {
-            //draw(0, 31, 31, 0, 0, 65535);
-            digitalWrite(11,HIGH);
-           
-          }
+          if_player1_shot_light(player1, player2,lightBombList2+i);
+  
           lightBombList2[i].counter=LIGHT_BOMB_COUNTER;
        }
        else{lightBombList2[i].counter--;}

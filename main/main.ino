@@ -52,14 +52,21 @@ void setup() {
   digitalWrite(5, HIGH);
   digitalWrite(6, HIGH);
   digitalWrite(7, HIGH);
+  // Reset
+    digitalWrite(8,HIGH);
+    delayMicroseconds(50);
+    digitalWrite(11,HIGH);
+    digitalWrite(12,HIGH);
+    delayMicroseconds(50);
+
+  
 
   //pin 12 is used as player 2 get shot signal
   digitalWrite(12,LOW);
   //pin 11 is used as player 1 get shot signal
   digitalWrite(11,LOW);
-  //pin 10 is used as clock signal
-  analogWrite(10,127);
   //pin 8 is used as reset signal
+  delayMicroseconds(50);
   digitalWrite(8,LOW);
   
 
@@ -118,6 +125,9 @@ void loop() {
     game_player2_wins(player1,player2);
     reset();
     digitalWrite(8,HIGH);
+    delayMicroseconds(50);
+    digitalWrite(11,HIGH);
+    digitalWrite(12,HIGH);
     //start=retry();
     reset();
   }
@@ -127,6 +137,9 @@ void loop() {
     game_player1_wins(player1,player2);
     reset();
     digitalWrite(8,HIGH);
+    delayMicroseconds(50);
+    digitalWrite(11,HIGH);
+    digitalWrite(12,HIGH);
     //start=retry();
     reset();
   }

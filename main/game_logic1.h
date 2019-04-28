@@ -75,11 +75,8 @@ void counter_update(player* player1, player* player2){
         if(player1->thunder_counter==50){
            draw(5,player1->r-1,16,3,16,ColY); 
            //thunder: HP decrement
-           if(if_player2_thunder(*player1, *player2)){
-                player2->HP_LOSE = INVINCIBLE_FRAME;
-                player2->HP--;
-                digitalWrite(12,HIGH);
-           }
+           if_player2_thunder(player1, player2);
+               
         }
         player1->thunder_counter-=2;
     }
@@ -93,11 +90,9 @@ void counter_update(player* player1, player* player2){
        if(player2->thunder_counter==50){
           draw(5,player2->r-1,0,3,16,ColG);
           //thunder: HP decrement
-          if(if_player1_thunder(*player1, *player2)){
-            player1->HP_LOSE = INVINCIBLE_FRAME;
-            player1->HP--;
-            digitalWrite(11,HIGH);
-          }
+          if_player1_thunder(player1, player2);
+    
+          
       }
       player2->thunder_counter-=2;
     }   
