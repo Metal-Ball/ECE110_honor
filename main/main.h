@@ -67,24 +67,17 @@ typedef struct{
 //screen 4
 
 void draw (uint8_t T, uint8_t X, uint8_t Y, uint8_t SizeX, uint8_t SizeY, uint16_t Col){
-    int delaytime = 0;   //Total Time = delay*8
+    int delaytime = 200;   //Total Time = delay*8
   
     Serial.write(254);
-    delay(delaytime);
     Serial.write(X);
-    delay(delaytime);
     Serial.write(Y);
-    delay(delaytime);
     Serial.write(SizeX);
-    delay(delaytime);
     Serial.write(SizeY);
-    delay(delaytime);
     Serial.write(Col/256);
-    delay(delaytime);
     Serial.write(Col%256);
-    delay(delaytime);
     Serial.write(T);
-    delay(delaytime);
+    delayMicroseconds(delaytime);
 
 }
 

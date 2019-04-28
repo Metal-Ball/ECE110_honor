@@ -5,7 +5,7 @@
 #include "starting_ending.h"
 #include "game_logic1.h"
 #include "game_logic2.h"
-
+#include "retry.h"
 
 ///////////////////////////constant and global variables//////////////////////////////////////////////////////////////////////
 //game starting signal
@@ -78,7 +78,7 @@ void loop() {
      //start game
      game_start(player1, player2);
      start=1;
-     
+    
   }
   if(start){
   //////////////////////////gaming//////////////////////////////////////////////////////////////////////////////
@@ -118,6 +118,8 @@ void loop() {
     game_player2_wins(player1,player2);
     reset();
     digitalWrite(8,HIGH);
+    //start=retry();
+    reset();
   }
   if (player2.HP == 0 ) {
     reset();
@@ -125,6 +127,8 @@ void loop() {
     game_player1_wins(player1,player2);
     reset();
     digitalWrite(8,HIGH);
+    //start=retry();
+    reset();
   }
   }
 }

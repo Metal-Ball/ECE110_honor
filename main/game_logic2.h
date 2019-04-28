@@ -37,7 +37,7 @@ void perform_bottom_actions(player* player1, player* player2, heavyBomb1* heavyB
   if (player1->LEFT==1 && (!player1->BE_LEFT))
   {  
      //feed random num generator
-     srand(player1->x*player2->y*(player1->heavy_usage+1));
+     srand(player1->x*player2->y-player1->y+player2->x);
      player1->r=randomGenerator();
      player1->BE_LEFT=BE_LEFT_MAX;
      player1->thunder_counter=thunder_counter_max;   
@@ -82,11 +82,13 @@ void perform_bottom_actions(player* player1, player* player2, heavyBomb1* heavyB
 
   //LEFT
   if (player2->LEFT == 1 &&(!player2->BE_LEFT)) {
-     srand(player1->x*player2->y*(player1->heavy_usage+1));
+     srand(player1->x*player2->y-player1->y+player2->x);
      player2->r=randomGenerator();
      player2->BE_LEFT=BE_LEFT_MAX;
      player2->thunder_counter=thunder_counter_max; 
-  }
+
+  }     
+     
   
   //DOWN
   if (player2->DOWN==1 && (!player2->BE_DOWN))
@@ -169,10 +171,8 @@ void perform_bomb_movement(player* player1, player* player2, heavyBomb1* heavyBo
             //clear bomb trace
             draw(0, heavyBombList1[i].x, heavyBombList1[i].y - 1, 0, 0, ColD);
             draw(3, heavyBombList1[i].x - 1, heavyBombList1[i].y - 2, heavyBombList1[i].x + 1, heavyBombList1[i].y - 2, ColD);
-            if (!player2->HP_LOSE && if_player2_shot_heavy(*player2, heavyBombList1[i])) {
-              draw(0, 0, 0, 0, 0, 65535);
-              player2->HP_LOSE = INVINCIBLE_FRAME;
-              player2->HP--;
+            if ((player2->HP_LOSE==0) && (if_player2_shot_heavy(player2, player1,heavyBombList1+i))) {
+              //draw(0, 0, 0, 0, 0, 65535);
               digitalWrite(12,HIGH);
               
             }
@@ -200,12 +200,10 @@ void perform_bomb_movement(player* player1, player* player2, heavyBomb1* heavyBo
             draw(3, heavyBombList2[i].x - 1, heavyBombList2[i].y + 2, heavyBombList2[i].x + 1, heavyBombList2[i].y + 2, ColD);
       
       
-            if (!player1->HP_LOSE && if_player1_shot_heavy(*player1, heavyBombList2[i])) {
-              draw(0, 31, 0, 0, 0, 65535);
-              player1->HP_LOSE = INVINCIBLE_FRAME;
-              player1->HP--;
+            if ( (player1->HP_LOSE==0) && (if_player1_shot_heavy(player1, player2,heavyBombList2+i))) {
+              //draw(0, 31, 0, 0, 0, 65535);
               digitalWrite(11,HIGH); 
-               
+              
             }
             heavyBombList2[i].counter=HEAVY_BOMB_COUNTER;
           }
@@ -235,8 +233,8 @@ void perform_bomb_movement(player* player1, player* player2, heavyBomb1* heavyBo
           draw(0, lightBombList1[i].x, lightBombList1[i].y - 1, 0, 0, ColD);
     
     
-          if (!player2->HP_LOSE && if_player2_shot_light(player2, lightBombList1[i])) {
-            draw(0, 31, 0, 0, 0, 65535);
+          if ( (player2->HP_LOSE==0) && (if_player2_shot_light(player2, player1,lightBombList1+i))) {
+            //draw(0, 31, 0, 0, 0, 65535);
             digitalWrite(12,HIGH);
            
           }
@@ -263,8 +261,8 @@ void perform_bomb_movement(player* player1, player* player2, heavyBomb1* heavyBo
           //clear bomb trace
           draw(0, lightBombList2[i].x, lightBombList2[i].y + 1, 0, 0, ColD);
     
-          if (!player1->HP_LOSE && if_player1_shot_light(player1, lightBombList2[i])) {
-            draw(0, 31, 31, 0, 0, 65535);
+          if ( (player1->HP_LOSE==0) && (if_player1_shot_light(player1, player2,lightBombList2+i))) {
+            //draw(0, 31, 31, 0, 0, 65535);
             digitalWrite(11,HIGH);
            
           }

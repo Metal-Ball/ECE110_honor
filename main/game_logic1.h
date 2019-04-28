@@ -40,67 +40,66 @@ void counter_update(player* player1, player* player2){
   }
   if (player1->BE_DOWN != 0) {
     player1->BE_DOWN--;
-    if(player1->BE_DOWN == BE_DOWN_MAX/4){
+    if(player1->BE_DOWN == BE_DOWN_MAX/2){
       player1->mycolor=ColR;
       player1->HP_LOSE=0;
+      draw(1,player1->x,player1->y,1,0,player1->mycolor);
     }
   }
   if (player2->BE_DOWN != 0){
     player2->BE_DOWN--;
-    if(player2->BE_DOWN == BE_DOWN_MAX/4){
+    if(player2->BE_DOWN == BE_DOWN_MAX/2){
       player2->mycolor=ColB;
       player1->HP_LOSE=0;
+      draw(1,player2->x,player2->y,1,0,player2->mycolor);
     }
   }
 
-  if (player1->HP_LOSE != 0) {
+  if (player1->HP_LOSE != 0 && player1->HP_LOSE<1000) {
     player1->HP_LOSE--;
     draw(1,player1->x,player1->y,1,0,ColD);
     draw(1,player1->x,player1->y,1,0,player1->mycolor);
+   
   }
-  if (player2->HP_LOSE != 0) {
+  if (player2->HP_LOSE != 0 && player2->HP_LOSE<1000) {
     player2->HP_LOSE--;
     draw(1,player2->x,player2->y,1,0,ColD);
     draw(1,player2->x,player2->y,1,0,player2->mycolor);
   }
   if(player1->thunder_counter!=0){
-    if(player1->thunder_counter>1){player1->thunder_counter--;}
-    if(player1->thunder_counter<=1) {
-       if(player1->thunder_counter<0.4){ 
-            draw(3,player1->r-1, 31, player1->r+1,16,ColD);
-            draw(3,player1->r-1,31,player1->r+1,31,ColD);      
+    if(player1->thunder_counter>50){player1->thunder_counter-=2;}
+    if(player1->thunder_counter<=50) {
+       if(player1->thunder_counter==20){ 
+            draw(5,player1->r-1,16,3,16,ColD);      
         }
-        if(player1->thunder_counter==1){
-           draw(3,player1->r-1, 31, player1->r+1,16,ColY);
+        if(player1->thunder_counter==50){
+           draw(5,player1->r-1,16,3,16,ColY); 
            //thunder: HP decrement
            if(if_player2_thunder(*player1, *player2)){
-                draw(0, 31, 31, 0, 0, ColG);
                 player2->HP_LOSE = INVINCIBLE_FRAME;
                 player2->HP--;
                 digitalWrite(12,HIGH);
            }
         }
-        player1->thunder_counter-=0.02;
+        player1->thunder_counter-=2;
     }
   }
   if(player2->thunder_counter!=0){
-    if(player2->thunder_counter>1){player2->thunder_counter--;}
-    if(player2->thunder_counter<=1) {
-       if(player2->thunder_counter<0.4){
-         draw(3,player2->r-1, 0, player2->r+1,15,ColD);
-         draw(3,player2->r-1,0,player2->r+1,15,ColD);
+    if(player2->thunder_counter>50){player2->thunder_counter-=2;}
+    if(player2->thunder_counter<=50) {
+       if(player2->thunder_counter==20){
+         draw(5,player2->r-1,0,3,16,ColD);
        }
-       if(player2->thunder_counter==1){
-          draw(3,player2->r-1, 0, player2->r+1,15,ColG);
+       if(player2->thunder_counter==50){
+          draw(5,player2->r-1,0,3,16,ColG);
           //thunder: HP decrement
           if(if_player1_thunder(*player1, *player2)){
-            draw(0, 31, 0, 0, 0, ColG);
             player1->HP_LOSE = INVINCIBLE_FRAME;
             player1->HP--;
             digitalWrite(11,HIGH);
           }
       }
-      player2->thunder_counter-=0.02;
+      player2->thunder_counter-=2;
     }   
   }
 }

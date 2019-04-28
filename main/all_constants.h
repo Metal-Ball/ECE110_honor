@@ -29,7 +29,7 @@
 #define INVINCIBLE_FRAME 50
 
 //thunder counter
-#define thunder_counter_max 50;
+#define thunder_counter_max 100;
 
 //player1 movement counter
 #define PLAYER1_COUNTER_MAX 5;

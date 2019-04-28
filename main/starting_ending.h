@@ -21,36 +21,108 @@ void print_welcome_message(){
 
 
 void game_ready(player* player1, player* player2){
-    print_welcome_message();
-    delay(50);
-    int player1_is_ready=0;
-    int player2_is_ready=0;
+   // Startup
+    print_welcome_message();      
+      int player1_is_ready=0;
+      int player2_is_ready=0;
+      int ship1 = 1;
+      int ship2 = 0;
+     #define counterTime 200
+      int counter = 200;
+      int8_t slitmove1 = 1;
+      int8_t slitmove2 = 1;
+      int8_t player1enable=0;
+      int8_t player2enable =0;
+      #define ShotColor 2016
+
+      delay(1000);
+      draw(1,10,ship1,1,0,ColR);
+      draw(1,20,ship2,1,0,ColB);
+      for(int i = 1; i < 16; i++){
+          if(i<11){
+          draw(1,10,ship1,1,0,0);
+          draw(1,20,ship2,1,0,0);
+          ship1 = ship1+1;
+          ship2 = ship2+1;
+          draw(1,10,ship1,1,0,ColR);
+          draw(1,20,ship2,1,0,ColB);
+          }
+// Big Sense of Animation
+
+                if ((i==6)||(i==15)){ draw(3,6,i,8,i,ShotColor); draw(3,12,i,14,i,ShotColor); 
+                               draw(3,16,i,18,i,ShotColor); draw(3,22,i,24,i,ShotColor);    }
+                       
+                if (((i>6)&&(i<9))||((i>11)&&(i<15))){
+                  draw(0,6,i,0,0,ShotColor); draw(0,14,i,0,0,ShotColor); draw(0,16,i,0,0,ShotColor); draw(0,24,i,0,0,ShotColor);}
+                delay(50);
+      }
+//Loop 
     while(1){
+      delay(1);
+      counter--;
+      if (counter == counterTime/2){
+          draw(1,10,ship1,1,0,0);
+          draw(1,20,ship2,1,0,0);
+          ship1 = ship1+slitmove1;
+          ship2 = ship2+slitmove2;
+          draw(1,10,ship1,1,0,ColR);
+          draw(1,20,ship2,1,0,ColB);
+          slitmove1 = slitmove1 *(-1);
+      }
+       if (counter==0){
+          draw(1,10,ship1,1,0,0);
+          draw(1,20,ship2,1,0,0);
+          ship1 = ship1+slitmove1;
+          ship2 = ship2+slitmove2;
+          draw(1,10,ship1,1,0,ColR);
+          draw(1,20,ship2,1,0,ColB);
+          slitmove2 = (-1)*slitmove2;
+          counter = counterTime;
+      } 
       joysticksIO(player1,player2);
       if(!player1_is_ready){
          if(player1->UP==1){
-            player1_is_ready=1;
             drawRec1(2,26,4,28,ColR);
+            player1enable =1;   
          }
       }
       if(!player2_is_ready){
          if(player2->UP==1){
-            player2_is_ready=1;
             drawRec1(27,26,29,28,ColB);
+            player2enable =1;
          }
       }
-      
+      //Detect and Fly Away Part
+       if((player1enable)&&(ship1<34)){
+                if(ship1==20){draw(5,6,6,10,10,0);}
+            draw(1,10,ship1,1,0,0);
+            ship1 ++;
+            draw(1,10,ship1,1,0,ColR);  
+            delay((34-ship1)*3);           
+            if(ship1>=34){player1_is_ready=1;}     
+        }     
+
+          if((player2enable)&&(ship2<34)){
+                if(ship2==20){draw(5,16,6,10,10,0);}
+            draw(1,20,ship2,1,0,0);
+            ship2 ++;
+            draw(1,20,ship2,1,0,ColB);  
+            if(ship2>=34){player2_is_ready=1;}
+            delay((34-ship2)*3);                
+        }     
       if(player1_is_ready && player2_is_ready){
         break;
       }
     }
     
-    *player1 = {15, 1,  0, 0, 0, 0, 0, 0, 3, 0, ColR, 0, 0, 0, 0, 0,0,0,-99};
-    *player2 = {15, 30, 0, 0, 0, 0, 0, 0, 3, 0, ColB, 0, 0, 0, 0, 0,0,0,-99};
+    *player1={15, 1, 0, 0, 0, 0, 0, 0, 3, 0,  ColR, 0, 0, 0, 0, -99};
+    *player2 = {15, 30, 0, 0, 0, 0, 0, 0, 3, 0, ColB, 0, 0, 0, 0, -99};
     player1->BE_UP=BE_UP_MAX;
     player2->BE_UP=BE_UP_MAX;
-    delay(2000);
+    delay(1000);
 }
+
+
 
 
 
@@ -74,7 +146,7 @@ void game_start(player player1, player player2){
 
 void game_player1_wins(player player1, player player2){
     //TODO: INSERT YOUR CODE HERE
-    
+    delay(5);
     draw(1,player2.x,player2.y,1,0,player2.mycolor);
     draw(1,player2.x,player2.y,2,0,player2.mycolor);
     delay(500);
@@ -152,6 +224,7 @@ void game_player1_wins(player player1, player player2){
 }
 
 void game_player2_wins(player player1, player player2){
+    delay(5);
     draw(1,player1.x,player1.y,1,0,player1.mycolor);
     draw(1,player1.x,player1.y,2,0,player1.mycolor);
     delay(500);
