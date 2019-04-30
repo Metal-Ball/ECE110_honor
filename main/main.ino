@@ -85,6 +85,17 @@ void loop() {
      //start game
      game_start(player1, player2);
      start=1;
+
+     //try
+     /*
+     game_player1_wins(player player1, player player2);
+     delay(10000);
+     reset();
+     game_player2_wins(player player1, player player2);
+     delay(10000);
+     reset();
+     */
+     
     
   }
   if(start){
@@ -128,7 +139,8 @@ void loop() {
     delayMicroseconds(50);
     digitalWrite(11,HIGH);
     digitalWrite(12,HIGH);
-    //start=retry();
+    reset();
+    start=retry(&player1, &player2,heavyBombList2);
     reset();
   }
   if (player2.HP == 0 ) {
@@ -140,7 +152,8 @@ void loop() {
     delayMicroseconds(50);
     digitalWrite(11,HIGH);
     digitalWrite(12,HIGH);
-    //start=retry();
+    reset();
+    start=retry(&player1,&player2,heavyBombList2);
     reset();
   }
   }

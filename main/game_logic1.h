@@ -70,10 +70,10 @@ void counter_update(player* player1, player* player2){
     if(player1->thunder_counter>50){player1->thunder_counter-=2;}
     if(player1->thunder_counter<=50) {
        if(player1->thunder_counter==20){ 
-            draw(5,player1->r-1,16,3,16,ColD);      
+           draw(3,player1->r-1,31,player1->r+1,16,ColD);      
         }
         if(player1->thunder_counter==50){
-           draw(5,player1->r-1,16,3,16,ColY); 
+           draw(3,player1->r-1,31,player1->r+1,16,ColY);
            //thunder: HP decrement
            if_player2_thunder(player1, player2);
                
@@ -85,10 +85,10 @@ void counter_update(player* player1, player* player2){
     if(player2->thunder_counter>50){player2->thunder_counter-=2;}
     if(player2->thunder_counter<=50) {
        if(player2->thunder_counter==20){
-         draw(5,player2->r-1,0,3,16,ColD);
+          draw(3,player2->r-1,0,player2->r+1,16,ColD);
        }
        if(player2->thunder_counter==50){
-          draw(5,player2->r-1,0,3,16,ColG);
+          draw(3,player2->r-1,0,player2->r+1,16,ColG);
           //thunder: HP decrement
           if_player1_thunder(player1, player2);
     

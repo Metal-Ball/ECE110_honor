@@ -21,6 +21,13 @@ void print_welcome_message(){
 
 
 void game_ready(player* player1, player* player2){
+   //initialize players
+    *player1={15, 1, 0, 0, 0, 0, 0, 0, 3, 0,  ColR, 0, 0, 0, 0, -99};
+    *player2 = {15, 30, 0, 0, 0, 0, 0, 0, 3, 0, ColB, 0, 0, 0, 0, -99};
+    player1->BE_UP=BE_UP_MAX;
+    player2->BE_UP=BE_UP_MAX;
+
+  
    // Startup
     print_welcome_message();      
       int player1_is_ready=0;
@@ -114,11 +121,7 @@ void game_ready(player* player1, player* player2){
         break;
       }
     }
-    
-    *player1={15, 1, 0, 0, 0, 0, 0, 0, 3, 0,  ColR, 0, 0, 0, 0, -99};
-    *player2 = {15, 30, 0, 0, 0, 0, 0, 0, 3, 0, ColB, 0, 0, 0, 0, -99};
-    player1->BE_UP=BE_UP_MAX;
-    player2->BE_UP=BE_UP_MAX;
+   
     delay(1000);
 }
 
@@ -129,15 +132,27 @@ void game_ready(player* player1, player* player2){
 
 void game_start(player player1, player player2){
     //TODO: INSERT YOUR CODE HERE
-    
     delay(1000);
     reset();
     delay(100);
     draw(1,player1.x,player1.y,1,0,player1.mycolor);
     draw(1,player2.x,player2.y,1,0,player2.mycolor);
-    
-    delay(1000);
-    
+    for (int g = 3;g>0;g--){
+        draw(3,0,15,31,15,ColR);
+        draw(3,0,16,31,16,ColB);
+        delay(500);
+        draw(3,0,15,31,15,0);
+        draw(3,0,16,31,16,0);
+        delay(500);
+    }
+    draw(3,0,15,31,15,ColR);
+    draw(3,0,16,31,16,ColB);
+    delay(500);
+    for (int i = 0;i<=31;i++){
+        draw(0,(31-i),15,0,0,0);
+        draw(0,i,16,0,0,0);
+        delay((1/exp(i/4))*30);
+    }
     
 }
 
@@ -207,8 +222,9 @@ void game_player1_wins(player player1, player player2){
         draw(1,player1.x,player1.y,1,0,player1.mycolor);
         delay(50);
     }
-    
-    while(1){
+    int counter=8;
+    while(counter>0){
+        counter--;
         draw(0,player1.x-3,player1.y+4,0,0,player1.mycolor+128);
         draw(0,player1.x+4,player1.y-4,0,0,player1.mycolor-128);
         draw(0,player1.x+5,player1.y-3,0,0,player1.mycolor+128);
@@ -285,8 +301,10 @@ void game_player2_wins(player player1, player player2){
         draw(1,player2.x,player2.y,1,0,player2.mycolor);
         delay(50);
     }
-    
-    while(1){
+
+    int counter=8;
+    while(counter>0){
+        counter--;
         draw(0,player2.x-3,player2.y+4,0,0,player2.mycolor+128);
         draw(0,player2.x+4,player2.y-4,0,0,player2.mycolor-128);
         draw(0,player2.x+5,player2.y-3,0,0,player2.mycolor+128);

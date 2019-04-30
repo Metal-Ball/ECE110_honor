@@ -105,11 +105,7 @@ void drawRec1(uint8_t X1, uint8_t Y1, uint8_t X2, uint8_t Y2, uint16_t Col){
   
 }
 
-void drawArrow(int x, int y,color Col){
-   draw(3,x,y+1,x,y-1,Col);
-   draw(0,x+1,y,0,0,Col);  
-  
-}
+
 
 void reset(){
     draw(4, 0,0,0,0,ColD);
@@ -158,7 +154,7 @@ void game_player1_wins(player player1, player player2){
     draw(0,25,31,0,0,ColR);
     for(b=25;b<=31;b++)
     {
-        draw(0,25,bv,0,0,ColR);
+        draw(0,25,b,0,0,ColR);
     }
     for(b=25;b<=31;b++)
     {
