@@ -50,7 +50,7 @@ void counter_update(player* player1, player* player2){
     player2->BE_DOWN--;
     if(player2->BE_DOWN == BE_DOWN_MAX/2){
       player2->mycolor=ColB;
-      player1->HP_LOSE=0;
+      player2->HP_LOSE=0;
       draw(1,player2->x,player2->y,1,0,player2->mycolor);
     }
   }

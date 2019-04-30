@@ -21,7 +21,9 @@ void print_welcome_message(){
 
 
 void game_ready(player* player1, player* player2){
-   //initialize players
+    //pin configuration
+     pin_configuration();
+    //initialize players
     *player1={15, 1, 0, 0, 0, 0, 0, 0, 3, 0,  ColR, 0, 0, 0, 0, -99};
     *player2 = {15, 30, 0, 0, 0, 0, 0, 0, 3, 0, ColB, 0, 0, 0, 0, -99};
     player1->BE_UP=BE_UP_MAX;
@@ -44,23 +46,23 @@ void game_ready(player* player1, player* player2){
 
       delay(1000);
       draw(1,10,ship1,1,0,ColR);
-      draw(1,20,ship2,1,0,ColB);
+      draw(1,21,ship2,1,0,ColB);
       for(int i = 1; i < 16; i++){
           if(i<11){
           draw(1,10,ship1,1,0,0);
-          draw(1,20,ship2,1,0,0);
+          draw(1,21,ship2,1,0,0);
           ship1 = ship1+1;
           ship2 = ship2+1;
           draw(1,10,ship1,1,0,ColR);
-          draw(1,20,ship2,1,0,ColB);
+          draw(1,21,ship2,1,0,ColB);
           }
 // Big Sense of Animation
 
                 if ((i==6)||(i==15)){ draw(3,6,i,8,i,ShotColor); draw(3,12,i,14,i,ShotColor); 
-                               draw(3,16,i,18,i,ShotColor); draw(3,22,i,24,i,ShotColor);    }
+                               draw(3,17,i,19,i,ShotColor); draw(3,23,i,25,i,ShotColor);    }
                        
                 if (((i>6)&&(i<9))||((i>11)&&(i<15))){
-                  draw(0,6,i,0,0,ShotColor); draw(0,14,i,0,0,ShotColor); draw(0,16,i,0,0,ShotColor); draw(0,24,i,0,0,ShotColor);}
+                  draw(0,6,i,0,0,ShotColor); draw(0,14,i,0,0,ShotColor); draw(0,17,i,0,0,ShotColor); draw(0,25,i,0,0,ShotColor);}
                 delay(50);
       }
 //Loop 
@@ -69,20 +71,20 @@ void game_ready(player* player1, player* player2){
       counter--;
       if (counter == counterTime/2){
           draw(1,10,ship1,1,0,0);
-          draw(1,20,ship2,1,0,0);
+          draw(1,21,ship2,1,0,0);
           ship1 = ship1+slitmove1;
           ship2 = ship2+slitmove2;
           draw(1,10,ship1,1,0,ColR);
-          draw(1,20,ship2,1,0,ColB);
+          draw(1,21,ship2,1,0,ColB);
           slitmove1 = slitmove1 *(-1);
       }
        if (counter==0){
           draw(1,10,ship1,1,0,0);
-          draw(1,20,ship2,1,0,0);
+          draw(1,21,ship2,1,0,0);
           ship1 = ship1+slitmove1;
           ship2 = ship2+slitmove2;
           draw(1,10,ship1,1,0,ColR);
-          draw(1,20,ship2,1,0,ColB);
+          draw(1,21,ship2,1,0,ColB);
           slitmove2 = (-1)*slitmove2;
           counter = counterTime;
       } 
@@ -111,9 +113,9 @@ void game_ready(player* player1, player* player2){
 
           if((player2enable)&&(ship2<34)){
                 if(ship2==20){draw(5,16,6,10,10,0);}
-            draw(1,20,ship2,1,0,0);
+            draw(1,21,ship2,1,0,0);
             ship2 ++;
-            draw(1,20,ship2,1,0,ColB);  
+            draw(1,21,ship2,1,0,ColB);  
             if(ship2>=34){player2_is_ready=1;}
             delay((34-ship2)*3);                
         }     

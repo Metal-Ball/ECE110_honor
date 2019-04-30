@@ -2,7 +2,6 @@ typedef struct letter{
    int x;
    int y;
    color col; 
-   int HP;
 }letter;
 
 
@@ -149,6 +148,32 @@ void drawN(letter letter_) {
   delay(1);
 }
 
+void drawBigRectangle(letter A,letter N){
+   int x0=A.x-1;
+   int y0=A.y-1;
+   int x1=N.x+5;
+   int y1=N.y+5;  
+   
+   for(int x=x0; x<=x1; x++){
+      draw(0,x,y0,0,0,ColY);
+      delay(20); 
+   }
+   for(int y=y0+1; y<=y1; y++){
+      draw(0,x1,y,0,0,ColY);
+      delay(20);
+   }
+   for(int x=x1-1; x>=x0; x--){
+      draw(0,x,y1,0,0,ColY);
+      delay(20); 
+   }
+   for(int y=y1-1; y>y0; y--){
+      draw(0,x0,y,0,0,ColY);
+      delay(20);
+   }
+   
+}
+
+
 void perform_player2_movement(player* player2){
  
   //player 2 movement
@@ -203,30 +228,25 @@ void perform_player2_bomb_movement(player* player2,heavyBomb2* heavyBombList2, l
             draw(3, heavyBombList2[i].x - 1, heavyBombList2[i].y + 2, heavyBombList2[i].x + 1, heavyBombList2[i].y + 2, ColD);
 
     
-            if(heavyBombList2[i].y <=7 && heavyBombList2[i].x >=1 && heavyBombList2[i].x <=5){
-                A->col-=2000;
-                A->HP--;
-                drawA(*A);
-            }
             
-           if(heavyBombList2[i].y <=7 && heavyBombList2[i].x >=6 && heavyBombList2[i].x <=12){
-                G->col-=2000;
+           if(heavyBombList2[i].y <=7 && heavyBombList2[i].x >=6 && heavyBombList2[i].x <=12 && G->col!=10000 ){
+                G->col=10000;
                 drawG(*G);
             }
 
 
-            if(heavyBombList2[i].y <=7 && heavyBombList2[i].x >=13 && heavyBombList2[i].x <=18){
-                A2->col-=2000;
+            if(heavyBombList2[i].y <=7 && heavyBombList2[i].x >=13 && heavyBombList2[i].x <=18 && A2->col!=10000 ){
+                A2->col=10000;
                 drawA(*A2);
             }
             
-            if(heavyBombList2[i].y <=7 && heavyBombList2[i].x >=19 && heavyBombList2[i].x <=24){
-                I->col-=2000;
+            if(heavyBombList2[i].y <=7 && heavyBombList2[i].x >=19 && heavyBombList2[i].x <=24 && I->col!=10000){
+                I->col=10000;
                 drawI(*I);
             }
 
-            if(heavyBombList2[i].y <=7 && heavyBombList2[i].x >=25 && heavyBombList2[i].x <=30){
-                N->col-=2000;
+            if(heavyBombList2[i].y <=7 && heavyBombList2[i].x >=25 && heavyBombList2[i].x <=30 && N->col!=10000){
+                N->col=10000;
                 drawN(*N);
             }
             
@@ -250,11 +270,11 @@ int retry(player* player1, player* player2, heavyBomb2* heavyBombList2) {
   }
   
   letter A, G, A2, I, N;
-  A={1,2,10000,3};
-  G={7,2,20000,3};
-  A2={13,2,30000,3};
-  I={19,2,40000,3};
-  N={25,2,50000,3};
+  A={1,2,10000};
+  G={7,2,20000};
+  A2={13,2,60000};
+  I={19,2,40000};
+  N={25,2,50000};
   drawA(A);
   drawG(G);
   drawA(A2);
@@ -262,7 +282,6 @@ int retry(player* player1, player* player2, heavyBomb2* heavyBombList2) {
   drawN(N);
   *player2 = {15, 30, 0, 0, 0, 0, 0, 0, 3, 0, ColB, 0, 0, 0, 0, -99};
   draw(1,player2->x,player2->y,1,0,player2->mycolor);
-  int flag;
   while(1){
       delay(5);
       counter_update(player1, player2);
@@ -270,28 +289,28 @@ int retry(player* player1, player* player2, heavyBomb2* heavyBombList2) {
       perform_player2_movement(player2);
       perform_player2_bottom_actions(player2, heavyBombList2);
       perform_player2_bomb_movement(player1,heavyBombList2, &A, &G, &A2, &I, &N);
-      if(A.HP==0){flag=0; break;}
+      if(G.col==A.col && A2.col==A.col && I.col==A.col && N.col==A.col){break;}
   }
-   
-  if(flag==0){
-     draw(5,0,0,6,32,ColD);
-     A.col=ColD;
-     drawA(A);
-     int speed=100;
-     while(1){
-        draw(1,player2->x,player2->y,1,0,ColD);
-        player2->y--;
-        if(player2->y<=0){break;}  
-        draw(1,player2->x,player2->y,1,0,player2->mycolor);
-        delay(speed);
-        speed-=3;
-        
-     }
-  }
-
-
-
   
-  return flag;
+  drawBigRectangle(A,N);
+  int counter=5;
+  while(counter>0){
+      counter--;
+      A.col+=10000;
+      G.col+=10000;
+      A2.col+=10000;
+      I.col+=10000;
+      N.col+=10000;
+      drawA(A);
+      drawG(G);
+      drawA(A2);
+      drawI(I);
+      drawN(N);
+      delay(300);
+    }
+    reset();
+    player1->HP=-99;
+    player2->HP=-99;
+   return 0;
   
 }

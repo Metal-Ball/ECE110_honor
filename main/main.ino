@@ -1,4 +1,5 @@
 #include "all_constants.h"
+#include "pin_configuration.h"
 #include "main.h"
 #include "HP_lose.h"
 #include "joystick_IO.h"
@@ -29,46 +30,6 @@ lightBomb2 lightBombList2[LIGHT_BOMB_NUM];
 void setup() {
 
   Serial.begin(74880);
-  
-  pinMode (2, INPUT); // BottomUp 1
-  pinMode (3, INPUT); // BottomRight 1
-  pinMode (4, INPUT); // BottomDown 1
-  pinMode (5, INPUT); // BottomLeft 1
-  pinMode (6, INPUT); // BottomStart 1
-  pinMode (7, INPUT); // BottomEnd 1
-
-  //player2
-  pinMode(12,OUTPUT);
-  //player1
-  pinMode(11,OUTPUT);
-  //clock
-  pinMode(10,OUTPUT);
-  //reset
-  pinMode(8,OUTPUT);
-  
-  digitalWrite(2, HIGH);
-  digitalWrite(3, HIGH);
-  digitalWrite(4, HIGH);
-  digitalWrite(5, HIGH);
-  digitalWrite(6, HIGH);
-  digitalWrite(7, HIGH);
-  // Reset
-    digitalWrite(8,HIGH);
-    delayMicroseconds(50);
-    digitalWrite(11,HIGH);
-    digitalWrite(12,HIGH);
-    delayMicroseconds(50);
-
-  
-
-  //pin 12 is used as player 2 get shot signal
-  digitalWrite(12,LOW);
-  //pin 11 is used as player 1 get shot signal
-  digitalWrite(11,LOW);
-  //pin 8 is used as reset signal
-  delayMicroseconds(50);
-  digitalWrite(8,LOW);
-  
 
 }
 
@@ -84,18 +45,7 @@ void loop() {
      bombList_init(heavyBombList1, heavyBombList2, lightBombList1, lightBombList2);
      //start game
      game_start(player1, player2);
-     start=1;
-
-     //try
-     /*
-     game_player1_wins(player player1, player player2);
-     delay(10000);
-     reset();
-     game_player2_wins(player player1, player player2);
-     delay(10000);
-     reset();
-     */
-     
+     start=1;     
     
   }
   if(start){
@@ -133,12 +83,7 @@ void loop() {
   if (player1.HP == 0) {
     reset();
     draw(1,player2.x,player2.y,1,0,player2.mycolor);
-    game_player2_wins(player1,player2);
-    reset();
-    digitalWrite(8,HIGH);
-    delayMicroseconds(50);
-    digitalWrite(11,HIGH);
-    digitalWrite(12,HIGH);
+    game_player2_wins(player1,player2);;
     reset();
     start=retry(&player1, &player2,heavyBombList2);
     reset();
@@ -147,11 +92,6 @@ void loop() {
     reset();
     draw(1,player1.x,player1.y,1,0,player1.mycolor);
     game_player1_wins(player1,player2);
-    reset();
-    digitalWrite(8,HIGH);
-    delayMicroseconds(50);
-    digitalWrite(11,HIGH);
-    digitalWrite(12,HIGH);
     reset();
     start=retry(&player1,&player2,heavyBombList2);
     reset();
